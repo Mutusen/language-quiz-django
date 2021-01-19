@@ -21,10 +21,11 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-Apply migrations, create a superuser:
+Apply migrations, collect static files, create a superuser:
 
 ```console
 $ python manage.py migrate
+$ python manage.py collectstatic
 $ python manage.py createsuperuser
 ```
 
@@ -38,6 +39,12 @@ Here is an example of working Apache config:
 
 	ServerAdmin webmaster@localhost
 	DocumentRoot /var/www/languagequiz
+
+	Alias /static /var/www/languagequiz/static
+
+	<Directory /var/www/languagequiz/static>
+		Require all granted
+	</Directory>
 	
 	<Directory /var/www/languagequiz/languagequiz>
 		<Files wsgi.py>
