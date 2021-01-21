@@ -76,11 +76,10 @@ def get_language_choices(language, number, difficult=False, spoken=False):
         other_languages = Language.objects.exclude(code__in=incompatible_codes).order_by('?')[:number-1]
     result = list(other_languages)  # Necessary to avoid weird results (otherwise the query is apparently reevaluated)
     result.append(language)
-    result.sort(key=lambda l: l.name)
 
-    languages = {}
+    languages = []
     for lang in result:
-        languages[lang.code] = lang.name
+        languages.append(lang.code)
     return languages
 
 
