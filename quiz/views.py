@@ -12,8 +12,8 @@ from quiz.wikipedia import get_wikipedia_link
 from quiz.models import Language, TextSample, Song
 
 
-def wikipedia(request, language_code):
-    return redirect(get_wikipedia_link(language_code))
+def wikipedia(request, user_language, language_code):
+    return redirect(get_wikipedia_link(user_language, language_code))
 
 
 def getcount(request):
@@ -84,9 +84,10 @@ def songquestion(request):
         'youtube_url': guess_song.youtube_url,
         'embed_url': guess_song.embed_url(),
         'title': guess_song.title,
-        'artist': guess_song.artist,
         'choices': language_choices,
     }
+    if guess_song.artist:
+        jsondata['artist'] = guess_song.artist
     response = JsonResponse(jsondata)
     return response
 

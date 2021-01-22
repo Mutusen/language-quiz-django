@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('wikipedia/<str:language_code>/', views.wikipedia, name="wikipedia"),
+    path('wikipedia/<str:user_language>/<str:language_code>/', views.wikipedia, name="wikipedia"),
     path('getcount/', views.getcount, name="getcount"),
     path('textquestion/', views.textquestion, name="textquestion"),
     path('songquestion/', views.songquestion, name="songquestion"),

@@ -1,8 +1,7 @@
 import urllib3, json
-from django.utils import translation
 
 
-def get_wikipedia_link(language_code):
+def get_wikipedia_link(user_language, language_code):
     http = urllib3.PoolManager()
     # Step 1: get the Wikidata ID of the language from the English Wikipedia
     url = 'https://en.wikipedia.org/w/api.php?action=query&prop=pageprops&ppprop=wikibase_item&redirects=1&format=json&titles=ISO_639:' + language_code
@@ -17,7 +16,7 @@ def get_wikipedia_link(language_code):
     r = http.request('GET', url)
     json_data = json.loads(r.data)
 
-    requested_wiki_code = translation.get_language() + "wiki"  # e.g. frwiki if the user is using the French version
+    requested_wiki_code = user_language + "wiki"  # e.g. frwiki if the user is using the French version
     sitelinks = json_data['entities'][wikidata_id]['sitelinks']
     if requested_wiki_code in sitelinks.keys():
         wikiurl = sitelinks[requested_wiki_code]['url']
