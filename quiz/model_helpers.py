@@ -30,10 +30,7 @@ def get_random_song(past_ids):
     while not got_song:
         # Select a random language with more at least 1 song
 
-        if randint(0, 1) == 1:  # To avoid getting the same song too often with languages that have only a couple
-            min_songs = randint(0, 2)
-        else:
-            min_songs = randint(3, 7)
+        min_songs = randint(0, 3)  # To avoid getting the same song too often with languages that have only a couple
         possible_languages = Language.objects.annotate(songs=Count('song')).filter(songs__gt=min_songs)
         possible_languages = list(possible_languages)
         shuffle(possible_languages)  # Because order_by('?') turns this into a list where one language can appear several times, once per song (wtf)
